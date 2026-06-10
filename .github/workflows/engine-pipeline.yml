@@ -1,0 +1,19 @@
+name: Quantum Engine Matrix CI
+
+on: [push, pull_request]
+
+jobs:
+  kernel-compilation-gate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Access Ingestion Repository Source Files
+      uses: actions/checkout@v4
+
+    - name: Instantiate System Environment (Python 3.11)
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Run Complete Test Suite Matrix
+      run: |
+        python -m unittest discover -s tests
