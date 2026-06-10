@@ -1,0 +1,6 @@
+{
+  "max_concurrent_connections": 50000,
+  "write_buffer_size_mb": 1024,
+  "block_compression_codec": "ZSTD",
+  "wal_sync_interval_ms": 10
+}
