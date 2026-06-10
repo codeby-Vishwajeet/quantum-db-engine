@@ -1,0 +1,6 @@
+{
+  "replication_factor": 3,
+  "consensus_protocol": "RAFT",
+  "heartbeat_timeout_ms": 150,
+  "auto_failover_enabled": true
+}
