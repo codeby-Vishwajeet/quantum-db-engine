@@ -1,188 +1,366 @@
-<div align="center">
+<p align="center">
+  <img src="docs/assets/quantum-banner.png" width="100%" alt="QUANTUM Banner">
+</p>
 
-# ⚡ QUANTUM
+<h1 align="center">⚡ QUANTUM</h1>
 
-### Distributed Time-Series Database Engine & Vector Storage Fabric
+<p align="center">
+Distributed Time-Series Database Engine & Vector Storage Fabric
+</p>
 
-*Enterprise-grade · Open Source · Microsecond Latencies*
+<p align="center">
+  <img src="https://img.shields.io/github/license/USERNAME/quantum?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/USERNAME/quantum?style=for-the-badge">
+  <img src="https://img.shields.io/github/forks/USERNAME/quantum?style=for-the-badge">
+  <img src="https://img.shields.io/github/actions/workflow/status/USERNAME/quantum/ci.yml?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge">
+</p>
 
-[![Build](https://img.shields.io/badge/build-passing-39ff14?style=for-the-badge&logo=github-actions&logoColor=white&labelColor=070913)](https://github.com)
-[![Kernel](https://img.shields.io/badge/kernel-v2.4.1-9d00ff?style=for-the-badge&logoColor=white&labelColor=070913)](https://github.com)
-[![Throughput](https://img.shields.io/badge/writes-1.2M%2Fsec-00f0ff?style=for-the-badge&logoColor=white&labelColor=070913)](https://github.com)
-[![Consensus](https://img.shields.io/badge/consensus-RAFT-ffaa00?style=for-the-badge&logoColor=white&labelColor=070913)](https://github.com)
-[![License](https://img.shields.io/badge/license-MIT-ffffff?style=for-the-badge&logoColor=white&labelColor=070913)](LICENSE)
-
-</div>
-
----
-
-Quantum is an enterprise-grade, open-source **distributed time-series database engine** and **high-throughput vector storage fabric** designed to sustain transactional workloads at microsecond latencies. The architecture unifies an asynchronous reverse-proxy ingestion gateway with multi-threaded kernel processing nodes — featuring a **Write-Ahead Log (WAL) Transactional Core** and a **RAFT-Driven Cluster Consensus Coordinator** — all surfaced through a real-time observability dashboard.
-
----
-
-## ⚡ Performance at a Glance
-
-| Metric | Value |
-|---|---|
-| Write Latency (p99) | **0.14 ms** |
-| Sustained Throughput | **1,200,000 writes / sec** |
-| Cluster Uptime (SLA) | **99.99%** |
-| Replication Factor | **3× (configurable)** |
-| External Runtime Dependencies | **0** |
+<p align="center">
+  <strong>
+  High-performance distributed database infrastructure for time-series workloads,
+  vector storage, replication, and real-time analytics.
+  </strong>
+</p>
 
 ---
 
-## 🗺️ System Architecture
+# 🚀 Overview
+
+QUANTUM is an open-source distributed database engine built for modern high-throughput workloads. It combines durable Write-Ahead Logging (WAL), distributed consensus coordination, B-Tree indexing, and real-time telemetry into a unified platform.
+
+Designed with scalability, observability, and reliability in mind, QUANTUM provides a foundation for next-generation analytics systems, event processing platforms, IoT pipelines, AI infrastructure, and large-scale data services.
+
+---
+
+# 🎥 Live Dashboard Preview
+
+<p align="center">
+  <img src="docs/assets/dashboard-demo.gif" width="100%" alt="Dashboard Preview">
+</p>
+
+---
+
+# ✨ Features
+
+| Feature | Description |
+|----------|-------------|
+| ⚡ WAL Storage Engine | Durable transaction logging and recovery |
+| 📈 Time-Series Processing | High-speed ingestion and querying |
+| 🧠 Vector Storage Fabric | Foundation for similarity search workloads |
+| ⛓️ Distributed Consensus | RAFT-inspired cluster coordination |
+| 🔄 Replication Engine | Multi-node synchronization |
+| 📊 Observability Dashboard | Live cluster monitoring |
+| 🚀 API Gateway | High-throughput request routing |
+| 🗂️ B-Tree Indexing | Efficient data retrieval |
+| 🧪 Automated Testing | Continuous validation pipelines |
+| 🔐 Reliability Focused | Built around fault tolerance principles |
+
+---
+
+# 🏗 Architecture
 
 ```mermaid
-graph TD
-    Client[🌐 High-Throughput Write / Query Traffic]
-    Client -->|Port 6000 · ACID Ingress| Gateway
+flowchart LR
 
-    subgraph kernel [" 🔷  Distributed Engine Kernel "]
-        Gateway[🛰 Quantum Ingress API Gateway]
-        Gateway -->|ACID Commits| Storage[💾 WAL Storage Core]
-        Gateway -->|RAFT Sync| Consensus[⛓ RAFT Consensus Coordinator]
-    end
+Client[🌐 Clients]
 
-    Storage  -->|B-Tree Flush| Index[🗂 B-Tree Index Manager]
-    Consensus -->|Replication Log Sync| Index
-    Index    -->|JSON Telemetry| Dashboard[💻 Observability Dashboard]
+Client --> Gateway[🛰 API Gateway]
 
-    style Client    fill:#fff0f3,stroke:#ff0055,stroke-width:2px
-    style Gateway   fill:#ecfeff,stroke:#00f0ff,stroke-width:2px
-    style Storage   fill:#f3e8ff,stroke:#9d00ff,stroke-width:2px
-    style Consensus fill:#fffbeb,stroke:#ffaa00,stroke-width:2px
-    style Index     fill:#f0fdf4,stroke:#39ff14,stroke-width:2px
-    style Dashboard fill:#ecfdf5,stroke:#39ff14,stroke-width:2px
+Gateway --> Storage[💾 Storage Engine]
+
+Gateway --> Consensus[⛓ Consensus Coordinator]
+
+Storage --> WAL[📜 WAL Core]
+
+Storage --> Index[🗂 B-Tree Index]
+
+Consensus --> Replica1[🖥 Node A]
+Consensus --> Replica2[🖥 Node B]
+Consensus --> Replica3[🖥 Node C]
+
+Index --> Dashboard[📊 Monitoring Dashboard]
+
+Replica1 --> Dashboard
+Replica2 --> Dashboard
+Replica3 --> Dashboard
 ```
 
 ---
 
-## 🎛️ Key Architectural Capacities
+# 🖼 Screenshots
 
-### 🛰 Asynchronous Reverse-Proxy Gateway
-Non-blocking native socket compilation layers route all server traffic across discrete internal processing clusters with zero head-of-line blocking. Exposes a single ingress surface on **port 6000**.
+## Dashboard
 
-### 💾 Write-Ahead Log (WAL) Transactional Core
-Multi-threaded storage kernel guaranteeing full ACID compliance. Sub-millisecond commit flush cycles combined with memory-mapped page caching sustain **over 1.2M writes per second** at p99 latency below 0.15 ms.
+<p align="center">
+  <img src="docs/screenshots/dashboard.png" width="90%">
+</p>
 
-### ⛓ RAFT-Driven Consensus Coordinator
-Leader election with automatic quorum detection and graceful failover. Heartbeat-driven log synchronization keeps replica state consistent across the entire cluster with no manual intervention.
+## Cluster Monitoring
 
-### 🗂 B-Tree Index Manager
-High-speed binary B-Tree indexing delivers sub-millisecond point reads and efficient range scans across all time-series partitions and vector embedding namespaces.
+<p align="center">
+  <img src="docs/screenshots/cluster.png" width="90%">
+</p>
 
-### 💻 Real-Time Observability Dashboard
-Live telemetry panel built on semantic HTML5 and CSS keyframe animation pipelines. Visualises transaction throughput, node health, replication lag, and WAL flush cycles in real time.
+## Replication Metrics
 
-### 🔒 Supply-Chain Secure Kernel
-Zero third-party runtime dependencies. The entire core is implemented on native platform micro-libraries, eliminating package-level supply-chain attack surfaces entirely.
-
----
-
-## 🛠️ Repository Structure
-
-| Path | Module | Function |
-|---|---|---|
-| `.github/workflows/engine-pipeline.yml` | `DevOps / CI-CD` | Continuous integration — validates database logic safety on every commit |
-| `core/storage.py` | `Database Kernel` | Multi-threaded WAL transactional storage — handles ACID insert cycles |
-| `core/indexing.py` | `Index Engine` | Binary B-Tree indexing for sub-ms point reads and range scans |
-| `core/kernel_constants.json` | `Kernel Policy` | Memory compression, max connections, and sync-block configuration |
-| `api/gateway.py` | `Network Access` | Async micro-proxy gateway orchestrating all ingress traffic |
-| `api/routes_map.json` | `Service Mapping` | API path bindings directing ingestion streams across internal layers |
-| `cluster/node_manager.py` | `Cluster Coord.` | RAFT heartbeat dispatch and cluster-state balancing |
-| `cluster/replica_policy.json` | `Consensus` | Replication factor, quorum rules, and auto-failover thresholds |
-| `console/index.html` | `Observability UI` | Live dashboard — real-time transaction throughput & cluster telemetry |
-| `tests/` | `QA Automation` | Integration suite validating memory logic and consistency guarantees |
-| `Makefile` | `Automation` | Build, test, and deployment shortcut commands |
+<p align="center">
+  <img src="docs/screenshots/metrics.png" width="90%">
+</p>
 
 ---
 
-## 🖥️ Live Cluster Diagnostics
+# 📂 Repository Structure
 
+```text
+quantum/
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+│
+├── api/
+│   ├── gateway.py
+│   └── routes_map.json
+│
+├── cluster/
+│   ├── node_manager.py
+│   └── replica_policy.json
+│
+├── core/
+│   ├── storage.py
+│   ├── indexing.py
+│   └── kernel_constants.json
+│
+├── console/
+│   └── index.html
+│
+├── tests/
+│
+├── docs/
+│   ├── assets/
+│   └── screenshots/
+│
+├── Makefile
+│
+└── README.md
 ```
-┌──────────────────────────────────────────────────────────────────────┐
-│  QUANTUM ENGINE — CLUSTER DIAGNOSTICS CONSOLE          ● ONLINE      │
-├─────────────────────────┬──────────────────────────┬──────┬──────────┤
-│  CHANNEL                │  SUBSYSTEM               │  CAP │  STATE   │
-├─────────────────────────┼──────────────────────────┼──────┼──────────┤
-│  🚀 /api/v2/engine/status│  QUANTUM_API_GATEWAY     │ 100% │ OPTIMAL  │
-│  💾 Memory Core Writes  │  CORE_STORAGE_KERNEL(WAL)│  18% │ STABLE   │
-│  ⛓ Clustered Sync Loops │  RAFT_TOPOLOGY_COORD.    │  24% │ SYNCED   │
-└─────────────────────────┴──────────────────────────┴──────┴──────────┘
-```
-
-> ```
-> [KERNEL STORAGE]  Executing Write-Ahead Log transaction block commit...           OK
-> [RAFT PROTOCOL]   Synchronising replication state to replica arrays — SUCCESS (0.14ms)
-> [INDEX MANAGER]   B-Tree flush complete — 18,492 keys indexed —                  CLEAN
-> [CONSENSUS]       Heartbeat ACK received from nodes [2, 3] — quorum MAINTAINED
-> ```
 
 ---
 
-## 🚀 Installation & Execution
+# ⚙️ Core Components
 
-### 1 — Clone the Repository
+## 💾 Storage Engine
+
+Responsible for:
+
+- Write-Ahead Logging
+- Transaction durability
+- Recovery operations
+- Data persistence
+
+---
+
+## 🗂 Index Manager
+
+Provides:
+
+- B-Tree indexing
+- Fast lookups
+- Efficient traversal
+- Query acceleration
+
+---
+
+## ⛓ Consensus Layer
+
+Handles:
+
+- Node coordination
+- Cluster health
+- Leader election
+- Replication synchronization
+
+---
+
+## 🚀 API Gateway
+
+Provides:
+
+- Request routing
+- Traffic distribution
+- Connection handling
+- External access layer
+
+---
+
+# 📊 Performance Targets
+
+| Metric | Target |
+|----------|---------|
+| Write Throughput | 1M+ ops/sec |
+| Read Throughput | 2M+ ops/sec |
+| Replication Delay | < 5ms |
+| Query Latency | Sub-millisecond |
+| Cluster Recovery | < 2 seconds |
+| Concurrent Connections | 100K+ |
+
+> Replace these numbers with actual benchmark results once available.
+
+---
+
+# 🚀 Quick Start
+
+## Clone Repository
 
 ```bash
-git clone https://github.com/your-org/quantum-db-engine
-cd quantum-db-engine
+git clone https://github.com/USERNAME/quantum.git
+
+cd quantum
 ```
 
-### 2 — Run the Full Quality Testing Suite
+## Run Tests
 
 ```bash
 make test
 ```
 
-### 3 — Deploy the Live Cluster Core
+## Start Engine
 
 ```bash
 make run
 ```
 
-### 4 — Open the Observability Dashboard
+## Open Dashboard
 
-Open `console/index.html` in your browser. The real-time cluster telemetry panel loads instantly.
-
----
-
-## 🤝 Contributing
-
-All patches must clear the full development pipeline before merge:
-
-```
- ┌──────────────┐    ┌────────────────────────┐    ┌──────────────────┐    ┌───────────────┐
- │  Fork Repo   │ ─► │  git checkout -b        │ ─► │  make test       │ ─► │  Pull Request │
- │              │    │  feature/your-fix        │    │  (all pass)      │    │  → main       │
- └──────────────┘    └────────────────────────┘    └──────────────────┘    └───────────────┘
+```text
+console/index.html
 ```
 
-**Commit format** — use conventional prefix + scope:
-
-| Prefix | Use for |
-|---|---|
-| `perf:` | Performance improvements (e.g. `perf: minimise WAL flush latency`) |
-| `fix:` | Bug fixes |
-| `feat:` | New features |
-| `docs:` | Documentation only |
-| `test:` | Test additions or updates |
-| `refactor:` | Code restructuring with no behaviour change |
-
-Branch naming: `feature/storage-latency-fix`, `fix/raft-heartbeat-timeout`, etc.
+Open the dashboard in your preferred browser.
 
 ---
 
-## 📄 License
+# 🧪 Testing
 
-Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for full terms.
+Execute the complete validation suite:
+
+```bash
+make test
+```
+
+The testing framework validates:
+
+- Storage correctness
+- Index consistency
+- Replication logic
+- API behavior
+- Cluster synchronization
 
 ---
 
-<div align="center">
+# 🔄 Development Workflow
 
-**⚡ QUANTUM** — Built with zero runtime dependencies · Designed for extreme throughput
+```text
+Fork Repository
+        │
+        ▼
+Create Feature Branch
+        │
+        ▼
+Implement Changes
+        │
+        ▼
+Run Tests
+        │
+        ▼
+Open Pull Request
+        │
+        ▼
+Code Review
+        │
+        ▼
+Merge
+```
 
-</div>
+---
+
+# 🗺 Roadmap
+
+## Version 1.x
+
+- [x] WAL Storage Engine
+- [x] API Gateway
+- [x] Dashboard Interface
+- [x] B-Tree Indexing
+
+## Version 2.x
+
+- [ ] Vector Similarity Search
+- [ ] Snapshot System
+- [ ] Distributed Sharding
+- [ ] Multi-Region Replication
+- [ ] Kubernetes Deployment
+- [ ] WebAssembly SDK
+
+## Version 3.x
+
+- [ ] Query Planner
+- [ ] Columnar Storage Engine
+- [ ] AI Query Optimization
+- [ ] Streaming Analytics Engine
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome.
+
+1. Fork the repository
+2. Create a feature branch
+
+```bash
+git checkout -b feature/amazing-feature
+```
+
+3. Commit your changes
+
+```bash
+git commit -m "feat: add amazing feature"
+```
+
+4. Push your branch
+
+```bash
+git push origin feature/amazing-feature
+```
+
+5. Open a Pull Request
+
+---
+
+# 📜 License
+
+Licensed under the MIT License.
+
+See the LICENSE file for details.
+
+---
+
+# ⭐ Support The Project
+
+If you find QUANTUM useful:
+
+⭐ Star the repository
+
+🍴 Fork the project
+
+🛠 Contribute improvements
+
+📢 Share it with the community
+
+---
+
+<p align="center">
+  Built for high-performance distributed systems.
+</p>
