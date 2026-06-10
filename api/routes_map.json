@@ -1,0 +1,8 @@
+{
+  "ingress_port": 6000,
+  "endpoints": {
+    "/api/v2/engine/status": "Cluster Health Matrix",
+    "/api/v2/query/execute": "Vector Query Resolution Node",
+    "/api/v2/write/ingest": "High-Throughput Log Stream Node"
+  }
+}
